@@ -1,0 +1,101 @@
+An Apollo server is a way for us to send test queries to a graphql server and 
+see the responses that we get back to it.
+
+This is like a graphql version of Postman.
+
+Graphql is like a layer between your database and client side queries.
+
+# Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
+
+// To fully set up the server, you would typically follow these steps:
+
+// Define Your Schema: Write a GraphQL schema that defines the types and fields available in your API.
+// Create Resolvers: Implement resolver functions that specify how to fetch or modify the data for each field in your schema.
+// Instantiate ApolloServer: Create an instance of ApolloServer, providing your schema and resolvers.
+// Start the Server: Use the startStandaloneServer function (or another method) to start your server, making it listen for incoming GraphQL requests.
+
+
+In Appolo server we pass some arguments:
+
+//typeDefs - Type definitions : These are basically descriptions of our data types we want
+//to expose in our graph and the relationship they have with other data types.
+TypeDefs are definitions of types of data we want to expose in our graph and the relationship they have with other.
+
+
+
+//These would be the diffrent types of data that we want to make available on the graph that a user can query.
+//The combinations of all these diffrent data types and the relationship to other types and the kinds of queries that 
+//can be made combine up to make something called a schema.
+
+//The schema is something that describes the shape of the graph and the data available on it.
+// A schema is a collection of type definitions (hence "typeDefs")
+// that together define the "shape" of queries that are executed against
+// your data.
+
+//resolvers - Bunch of resolver functions that determine how we respond to queries for diffrent data on the graph
+
+
+
+"A GraphQL object type has a name and fields, but at some point those fields have to resolve to some concrete data.
+That's where the scalar types come in: they represent the leaves of the query."
+
+type Tracking {
+  origin: String!
+  destination: String
+  weight_lbs: Int
+}
+
+Here, String and Int are two of GraphQL's built-in scalar types.
+
+GraphQL has its own set of scalar types that you don't have to initiate, these are:
+
+Int: A signed 32‐bit integer.
+Float: A signed double-precision floating-point value.
+String: A UTF‐8 character sequence.
+Boolean: true or false.
+ID: The ID scalar type represents a unique identifier, often used to refetch an object or as the key for a cache. 
+The ID type is serialized in the same way as a String; 
+however, defining it as an ID signifies that it is not intended to be human‐readable.
+
+//Schema is something that describes the shape of the graph and the data that is available on it.
+In the context of a GraphQL Apollo server, this schema file is what Apollo Server uses to understand 
+what data it can serve and how it is structured. It's a contract between your server and the clients that 
+will be requesting data, ensuring that both sides understand the shape and nature of the data that can be exchanged.
+
+
+//Resolvers : This contains a bunch of resolver functions and these resolver functions are used to handle any incoming requests 
+and data to the clients because at the moment all we have done is define what the graph looks like 
+in terms of the data types that we have and the entry points but we haven't yet mentioned how we are going to handle requests or 
+queries for that data and for tdoing this we need the resolver functions.
+
+Resolvers are functions that resolve data for a particular field in your schema. 
+They're responsible for fetching and returning the data that the client requests.
+
+
+Schema and TypeDefs : A map for apollo to structure the graph but they don't actually handle the queries.
+Then we make the resolver functions to handle the queries based on our schema and type.
+
+//Query Variables
+Query variables in GraphQL are a way to pass dynamic values to your queries. 
+They make your queries more flexible and reusable. 
+Instead of hardcoding values directly into the query, you can use variables.
+
+-Underscore (_): This is a convention used in many programming languages, including JavaScript 
+to indicate that the parameter is not going to be used in the function. 
+In the context of GraphQL resolvers, the first parameter is usually the parent data which, 
+in the case of a root level query like review, is often not needed.
+
+-Arguments (args): This is an object containing all the arguments passed to the review query. 
+In GraphQL, you can define arguments for your queries and mutations which allow you to pass in 
+data or parameters to modify how the query is executed. 
+For example, if your review query is supposed to fetch a specific review by its ID, 
+the ID would be passed in the args.
+
+-Context (context): This is an object that gets passed through all resolvers, 
+during the execution of a query or mutation. It's often used to hold important contextual information 
+like authentication details, database connections, or other dependencies.
+
+
+-In GraphQL, a mutation is a type of operation that allows you to modify data on the server. 
+While queries in GraphQL are used to fetch data, mutations are used for operations that cause changes, 
+such as creating, updating, or deleting data.
