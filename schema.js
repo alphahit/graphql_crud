@@ -82,9 +82,11 @@ type Query{
 }
 
 type Mutation{
-    addGame(game:AddGameInput ):Game
-    deleteGame(id:ID!):[Game]
+    addGame(game:AddGameInput!):Game
+    deleteGame(id:ID!):Game
     updateGame(id:ID!,edits:EditGameInput!): Game
+    addAuthor(author:AddAuthorInput!): Author
+    addReview(review:AddReviewInput!): Review
 }
 input AddGameInput{
     title: String!,
@@ -95,5 +97,14 @@ input EditGameInput{
     title: String,
     platform: [String!]
 }
-
+input AddAuthorInput{
+    name: String!, 
+    verified: Boolean!
+}
+input AddReviewInput{
+    rating:Int!
+    content:String!
+    game_id:ID!
+    author_id:ID!
+}
 `;
