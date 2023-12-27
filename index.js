@@ -33,7 +33,7 @@ const resolvers = {
             // 'toArray()' converts the result to an array of objects.
             // Since 'find' returns a cursor, 'toArray()' is used to fetch all documents pointed to by the cursor.
             const games = await gamesCollection.find({}).toArray();
-
+            console.log("Games returned=====>",games)
             // Map over each game and rename '_id' to 'id'.
             return games.map((game) => ({
                 ...game,
@@ -123,15 +123,17 @@ const resolvers = {
         async author(parent) {
             const db = getDb();
             const authorsCollection = db.collection("authors");
-            return await authorsCollection.findOne({ _id: parent.author_id });
+            const author = await authorsCollection.findOne({ _id: parent.author_id });
+            return author ? { ...author, id: author._id.toString() } : null;
         },
-
         async game(parent) {
             const db = getDb();
             const gamesCollection = db.collection("games");
-            return await gamesCollection.findOne({ _id: parent.game_id });
+            const game = await gamesCollection.findOne({ _id: parent.game_id });
+            return game ? { ...game, id: game._id.toString() } : null;
         },
-    },
+    }
+    ,
     Mutation: {
         //Mutation Resolvers
         deleteGame: async (_, args) => {
@@ -180,7 +182,7 @@ const resolvers = {
 
             // Log the 'gamesCollection' object for debugging purposes. This helps to verify that
             // the collection is correctly accessed.
-            console.log("gamesCollection =========>", gamesCollection);
+            //console.log("gamesCollection =========>", gamesCollection);
 
             // Insert a new game document into the 'games' collection. The game data comes from 'args.game',
             // which is provided by the client when making the mutation request. The spread operator '...'
@@ -189,7 +191,7 @@ const resolvers = {
 
             // Log the result of the insert operation for debugging. This will show whether the insert was successful
             // and other details about the operation.
-            console.log("result======>", result);
+            //console.log("result======>", result);
 
             // Check if the insert operation was acknowledged by MongoDB. If it was, the operation was successful.
             if (result.acknowledged) {

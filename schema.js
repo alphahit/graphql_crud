@@ -11,13 +11,18 @@ export const typeDefs = `#graphql
 #latform: [String!]!: A non-nullable array of non-nullable strings, representing the platforms the game is available on.
 #reviews:[Review!]: An array of Review types. This can be null, but if present, 
 #all items in the array must be of type Review and cannot be null.
-type Game {
-    id: ID! #The ! mark mean this is not allowed to be null
-    title: String!
-    platform: [String!]! #This array mark implies array of strings
-    reviews:[Review!] #It is [Review!] an not [Review!]! because, the game might not have any reviews but if it has any review it should be of type review
-}
 
+
+type Game {
+    id: ID!
+    title: String!
+    subtitle: String!
+    platform: [String!]!
+    poster: String
+    price: Float
+    isFree: String!
+    reviews: [Review!]
+}
 
 
 
@@ -88,10 +93,15 @@ type Mutation{
     addAuthor(author:AddAuthorInput!): Author
     addReview(review:AddReviewInput!): Review
 }
-input AddGameInput{
-    title: String!,
+input AddGameInput {
+    title: String!
+    subtitle: String!
     platform: [String!]!
+    poster: String
+    price: Float
+    isFree: String!
 }
+
 
 input EditGameInput{
     title: String,
